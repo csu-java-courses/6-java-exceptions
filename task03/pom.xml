@@ -6,11 +6,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>java-base</groupId>
-        <artifactId>java-exceptions</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <groupId>com.example</groupId>
+        <artifactId>6-java-exceptions</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>task03</artifactId>
+
+    <name>Задание 03 Кидаем checked исключение</name>
 
 </project>

@@ -1,24 +1,24 @@
 package com.example.task06;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-public class Tests {
+public class Task06MainTest {
 
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
     private final PrintStream originalSystemOut = System.out;
 
-    @Before
+    @BeforeEach
     public void setUpSystemOut() {
         System.setOut(new PrintStream(out));
     }
 
-    @After
+    @AfterEach
     public void cleanUpSystemOut() {
         System.setOut(originalSystemOut);
     }
@@ -26,13 +26,13 @@ public class Tests {
     @Test
     public void testPrintMethodName() {
         new Task06Main().printMethodName();
-        Assert.assertEquals("testPrintMethodName", printedMethodName());
+        Assertions.assertEquals("testPrintMethodName", printedMethodName());
     }
 
     @Test
     public void testPrintMethodName_calledFromAnotherMethod() {
         callPrintMethodName();
-        Assert.assertEquals("callPrintMethodName", printedMethodName());
+        Assertions.assertEquals("callPrintMethodName", printedMethodName());
     }
 
     private void callPrintMethodName() {

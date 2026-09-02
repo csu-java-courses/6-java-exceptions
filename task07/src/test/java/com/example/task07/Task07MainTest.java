@@ -1,12 +1,12 @@
 package com.example.task07;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.io.IOException;
 
-public class Tests {
+public class Task07MainTest {
 
     @Test
     public void testCountExceptions_unchecked() throws Exception {
@@ -17,7 +17,7 @@ public class Tests {
         main.processor = mockedProcessor;
 
         String actual = main.getExceptionType();
-        Assert.assertEquals(Task07Main.UNCHECKED, actual);
+        Assertions.assertEquals(Task07Main.UNCHECKED, actual);
     }
 
     @Test
@@ -29,7 +29,7 @@ public class Tests {
         main.processor = mockedProcessor;
 
         String actual = main.getExceptionType();
-        Assert.assertEquals(Task07Main.CHECKED, actual);
+        Assertions.assertEquals(Task07Main.CHECKED, actual);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class Tests {
         main.processor = mockedProcessor;
 
         String actual = main.getExceptionType();
-        Assert.assertEquals(Task07Main.NONE, actual);
+        Assertions.assertEquals(Task07Main.NONE, actual);
     }
 
 }

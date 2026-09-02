@@ -4,26 +4,26 @@ import codecheck.CodeParser;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.stmt.CatchClause;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.List;
 
-public class Tests {
+public class Task05MainTest {
 
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
     private final PrintStream originalSystemOut = System.out;
 
-    @Before
+    @BeforeEach
     public void setUpSystemOut() {
         System.setOut(new PrintStream(out));
     }
 
-    @After
+    @AfterEach
     public void cleanUpSystemOut() {
         System.setOut(originalSystemOut);
     }
@@ -36,40 +36,39 @@ public class Tests {
         } catch (Throwable t) {
             throw new AssertionError("метод main не должен бросать исключение, если файл не найден", t);
         }
-        Assert.assertEquals("файл \"abcd\" не найден\n", out.toString());
+        Assertions.assertEquals("файл \"abcd\" не найден\n", out.toString());
     }
 
     @Test
     public void testMainNotDeclareThrows() throws Exception {
         MethodDeclaration method = mainMethodDeclaration();
         NodeList thrownExceptionsList = method.getThrownExceptions();
-        Assert.assertEquals("method main does not declare throws", 0, thrownExceptionsList.size());
+        Assertions.assertEquals(0, thrownExceptionsList.size(), "method main does not declare throws");
     }
 
     @Test
     public void testMainContainsTwoCatchClauses() throws Exception {
         List<CatchClause> catchClauses = mainMethodDeclaration().findAll(CatchClause.class);
-        Assert.assertEquals("method main body contains 2 catch clauses", 2, catchClauses.size());
+        Assertions.assertEquals(2, catchClauses.size(), "method main body contains 2 catch clauses");
 
         CatchClause firstCatchClause = catchClauses.get(0);
-        Assert.assertTrue("first catch clause should be FileNotFoundException",
-                firstCatchClause.getParameter().getType().toString().contains("FileNotFoundException"));
+        Assertions.assertTrue(firstCatchClause.getParameter().getType().toString().contains("FileNotFoundException"),
+                           "first catch clause should be FileNotFoundException");
 
         CatchClause secondCatchClause = catchClauses.get(1);
-        Assert.assertTrue("second catch clause should be IOException",
-                secondCatchClause.getParameter().getType().toString().contains("IOException"));
+        Assertions.assertTrue(secondCatchClause.getParameter().getType().toString().contains("IOException"), "second catch clause should be IOException");
     }
 
     @Test
     public void testCatchClausesPrintExpectedMessages() throws Exception {
         List<CatchClause> catchClauses = mainMethodDeclaration().findAll(CatchClause.class);
-        Assert.assertEquals("method main body contains 2 catch clauses", 2, catchClauses.size());
+        Assertions.assertEquals(2, catchClauses.size(), "method main body contains 2 catch clauses");
 
-        Assert.assertTrue("FileNotFoundException catch clause should print 'не найден'",
-                catchClauses.get(0).getBody().toString().contains("не найден"));
+        Assertions.assertTrue(catchClauses.get(0).getBody().toString().contains("не найден"),
+                           "FileNotFoundException catch clause should print 'не найден'");
 
-        Assert.assertTrue("IOException catch clause should print 'произошла ошибка при чтении файла'",
-                catchClauses.get(1).getBody().toString().contains("произошла ошибка при чтении файла"));
+        Assertions.assertTrue(catchClauses.get(1).getBody().toString().contains("произошла ошибка при чтении файла"),
+                           "IOException catch clause should print 'произошла ошибка при чтении файла'");
     }
 
     private MethodDeclaration mainMethodDeclaration() throws Exception {
